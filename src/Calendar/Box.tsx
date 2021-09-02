@@ -1,6 +1,5 @@
 import React from 'react';
 import { DateType } from './DateType';
-// import './style.css';
 
 interface BoxProp {
     /** 날짜 */
@@ -48,16 +47,28 @@ export const Box = ({
             className={`calendar-box ${isHoliday ? 'calendar-holiday' : ''} ${
                 isPreviousMonth ? 'calendar-previous-month' : ''
             } ${isNextMonth ? 'calendar-next-month' : ''}`}
-            onClick={() => (onClick && date && canSelect ? onClick(date) : undefined)}
+            onClick={() =>
+                onClick && date && canSelect ? onClick(date) : undefined
+            }
         >
             <div
                 className={`calendar-selectionBox ${
                     isSelected ? 'calendar-selectionBox-selected' : ''
-                } ${isSelectedStart ? 'calendar-selectionBox-selected-start' : ''} ${
+                } ${
+                    isSelectedStart
+                        ? 'calendar-selectionBox-selected-start'
+                        : ''
+                } ${
                     isSelectedEnd ? 'calendar-selectionBox-selected-end' : ''
                 } ${canSelect ? '' : 'calendar-box-disabled'}`}
             >
-                <div className={`${isToday && highlightToday ? 'calendar-today' : ''}`}>{text}</div>
+                <div
+                    className={`${
+                        isToday && highlightToday ? 'calendar-today' : ''
+                    }`}
+                >
+                    {text}
+                </div>
             </div>
         </div>
     );

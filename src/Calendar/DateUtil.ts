@@ -9,8 +9,9 @@ export class DateUtil {
     public ensureDateValue(value: Date | string | number): Date {
         let dateValue: Date;
         if (typeof value === 'string') {
-            
-            const numberValues = value.split(/[^0-9]/).map((x) => parseInt(x, 10));
+            const numberValues = value
+                .split(/[^0-9]/)
+                .map((x) => parseInt(x, 10));
             if (numberValues.length >= 5) {
                 dateValue = new Date(
                     numberValues[0],
