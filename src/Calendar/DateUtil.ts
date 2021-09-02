@@ -6,7 +6,7 @@ export class DateUtil {
      * @returns {Date}
      * @memberof Dates
      */
-    public ensureDateValue(value: Date | string | number): Date {
+    public static ensureDateValue(value: Date | string | number): Date {
         let dateValue: Date;
         if (typeof value === 'string') {
             const numberValues = value
