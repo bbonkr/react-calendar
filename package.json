@@ -4,7 +4,7 @@
     "description": "Calendar React Component",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
-    "types": "dist/types/index.d.ts",
+    "types": "dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
         "build": "rollup -c",
