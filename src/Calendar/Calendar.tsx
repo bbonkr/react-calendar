@@ -83,7 +83,7 @@ interface CalendarProps {
 /**
  * 달력으로 기간을 선택합니다.
  * @param {CalendarProps}
- * @returns 
+ * @returns
  */
 const Calendar = ({
     selection,
@@ -97,8 +97,12 @@ const Calendar = ({
     onChange,
 }: CalendarProps) => {
     const dateUtil = new DateUtil();
-    const [date, setDate] = useState<DateType>(selection || dayjs().format('YYYY-MM-DD HH:mm:ss'));
-    const [selectedDates, setSelectedDates] = useState<DateType[]>(selections || []);
+    const [date, setDate] = useState<DateType>(
+        selection || dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    );
+    const [selectedDates, setSelectedDates] = useState<DateType[]>(
+        selections || [],
+    );
     const [records, setRecords] = useState<DateItem[][]>([]);
     const today = dayjs();
 
@@ -122,15 +126,24 @@ const Calendar = ({
                             text: current.date().toString(),
                             isHoliday: 0 === current.day(),
                             isPreviousMonth:
-                                current.month() !== basis.month() && week === startWeek,
-                            isNextMonth: current.month() !== basis.month() && week !== startWeek,
-                            isToday: current.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'),
+                                current.month() !== basis.month() &&
+                                week === startWeek,
+                            isNextMonth:
+                                current.month() !== basis.month() &&
+                                week !== startWeek,
+                            isToday:
+                                current.format('YYYY-MM-DD') ===
+                                dayjs().format('YYYY-MM-DD'),
                             isSelected:
                                 sDates &&
                                 sDates.length > 0 &&
                                 current.isBetween(
                                     dayjs(sDates[0]),
-                                    dayjs(sDates.length === 1 ? sDates[0] : sDates[1]),
+                                    dayjs(
+                                        sDates.length === 1
+                                            ? sDates[0]
+                                            : sDates[1],
+                                    ),
                                     'day',
                                     '[]',
                                 ),
@@ -143,9 +156,11 @@ const Calendar = ({
                                 sDates &&
                                 sDates.length > 0 &&
                                 current.format('YYYY-MM-DD') ===
-                                    dayjs(sDates.length === 1 ? sDates[0] : sDates[1]).format(
-                                        'YYYY-MM-DD',
-                                    ),
+                                    dayjs(
+                                        sDates.length === 1
+                                            ? sDates[0]
+                                            : sDates[1],
+                                    ).format('YYYY-MM-DD'),
                             canSelect:
                                 (!minDate ||
                                     (!!minDate &&
@@ -193,7 +208,11 @@ const Calendar = ({
         }
     }, [onChange, selectedDates]);
 
-    const getButtonTitle = (date: DateType, value: number, interval: 'year' | 'month'): string => {
+    const getButtonTitle = (
+        date: DateType,
+        value: number,
+        interval: 'year' | 'month',
+    ): string => {
         const d = dayjs(dateUtil.ensureDateValue(date)).add(value, interval);
 
         return `Move to ${d.format('YYYY-MM')}`;
@@ -201,9 +220,7 @@ const Calendar = ({
 
     const handleClickPrevYear = () => {
         setDate((prevState) =>
-            dayjs(prevState)
-                .add(-1, 'year')
-                .format('YYYY-MM-DD'),
+            dayjs(prevState).add(-1, 'year').format('YYYY-MM-DD'),
         );
     };
 
@@ -217,24 +234,17 @@ const Calendar = ({
     };
     const handleClickNextMonth = () => {
         setDate((prevState) =>
-            dayjs(prevState)
-                .add(1, 'month')
-                .format('YYYY-MM-DD'),
+            dayjs(prevState).add(1, 'month').format('YYYY-MM-DD'),
         );
     };
     const handleClickNextYear = () => {
         setDate((prevState) =>
-            dayjs(prevState)
-                .add(1, 'year')
-                .format('YYYY-MM-DD'),
+            dayjs(prevState).add(1, 'year').format('YYYY-MM-DD'),
         );
     };
 
     const handleClickToday = () => {
-        setDate(
-            today
-                .format('YYYY-MM-DD'),
-        );
+        setDate(today.format('YYYY-MM-DD'));
     };
 
     const handleClickBox = (date: DateType) => {
@@ -296,11 +306,19 @@ const Calendar = ({
 
             <div className="calendar-week-container">
                 {dayjs.weekdaysMin(true).map((item, index) => (
-                    <Box key={item} text={item} canSelect={true} isHoliday={index === 0} />
+                    <Box
+                        key={item}
+                        text={item}
+                        canSelect={true}
+                        isHoliday={index === 0}
+                    />
                 ))}
             </div>
             {records.map((a, index) => (
-                <div key={(+new Date() + index).toString()} className="calendar-week-container">
+                <div
+                    key={(+new Date() + index).toString()}
+                    className="calendar-week-container"
+                >
                     {a.map((b) => (
                         <Box
                             key={b.text}
@@ -313,7 +331,9 @@ const Calendar = ({
             ))}
             {showDate && (
                 <div className="calendar-bottom-container">
-                    <button onClick={handleClickToday}>Today: {today.format('YYYY-MM-DD')}</button>
+                    <button onClick={handleClickToday}>
+                        Today: {today.format('YYYY-MM-DD')}
+                    </button>
                 </div>
             )}
         </div>
