@@ -1,0 +1,10 @@
+node_modules
+src/
+.github/
+.babelrc
+.eslintignore
+.eslintrc
+.npmignore
+.prettierrc
+rollup.config.js
+tsconfig.json
