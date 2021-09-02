@@ -1,13 +1,14 @@
 {
     "name": "@bbon/react-calendar",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Calendar React Component",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
     "types": "dist/index.d.ts",
+    "style": "dist/calendar.css",
     "sideEffects": false,
     "files": [
-        "dist"
+        "dist/**/*.{css,js,map,ts}"
     ],
     "scripts": {
         "build": "rollup -c",
