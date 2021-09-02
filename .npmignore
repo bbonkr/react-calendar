@@ -1,0 +1,9 @@
+node_modules
+src/
+.babelrc
+.eslintrc
+.eslintignore
+.npmignore
+.prettierrc
+rollup.config.js
+tsconfig.json
