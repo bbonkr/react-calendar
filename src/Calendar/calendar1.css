@@ -1,0 +1,113 @@
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-button {
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    min-width: 3rem;
+    min-height: 1.8rem;
+}
+
+.calendar-button.previous-year {
+}
+.calendar-button.previous-month {
+}
+.calendar-button.next-month {
+}
+.calendar-button.next-year {
+}
+
+.calendar-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.calendar-title > div {
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+
+.calendar-week-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-box {
+    padding: 0.6rem 0;
+    /* margin: 0.6rem; */
+    width: 2.6rem;
+    height: 2.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #eeeeee; */
+}
+.calendar-box:hover {
+    cursor: pointer;
+}
+
+.calendar-box div {
+    display: flex;
+    text-align: center;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.calendar-box-disabled {
+    color: #777;
+    opacity: 0.3;
+}
+
+.calendar-holiday {
+    color: #ff3232;
+}
+
+.calendar-previous-month,
+.calendar-next-month {
+    color: #bbbbbb;
+}
+
+.calendar-bottom-container {
+    text-align: center;
+}
+
+.calendar-today {
+    color: #fafafa;
+    border-radius: 0.9rem;
+    background-color: #5252ff;
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.calendar-box-text {
+    padding: 0.6rem;
+}
+
+.calendar-selectionBox {
+    width: 100%;
+    height: 2rem;
+    /* background-color: #ababab; */
+}
+
+.calendar-selectionBox-selected {
+    background-color: #52ff52;
+}
+
+.calendar-selectionBox-selected-start {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.calendar-selectionBox-selected-end {
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
