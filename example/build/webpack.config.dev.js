@@ -21,9 +21,9 @@ module.exports = {
     },
     devServer: {
         port: 3000,
-        host: '0.0.0.0',
-        overlay: true,
-        stats: 'errors-only',
+        // host: '0.0.0.0',
+        // overlay: true,
+        // stats: 'errors-only',
         contentBase: path.resolve('out'),
         historyApiFallback: true,
         hot: true,
