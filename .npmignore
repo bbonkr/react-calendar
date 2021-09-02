@@ -1,6 +1,7 @@
 node_modules
 src/
 .github/
+example/
 .babelrc
 .eslintignore
 .eslintrc
