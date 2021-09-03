@@ -16,6 +16,17 @@ export const Header = () => {
                     <Link to="/hello-world">Does not exist page</Link>
                 </li>
             </ul>
+            <ul>
+                <li>
+                    <a
+                        href="https://github.com/bbonkr/react-calendar"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Github
+                    </a>
+                </li>
+            </ul>
         </nav>
     );
 };

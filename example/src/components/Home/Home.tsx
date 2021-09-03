@@ -12,15 +12,6 @@ export const Home = () => {
     const handleChangeSelection = useCallback(
         (start?: string, end?: string) => {
             console.info(start, end);
-            // if (start) {
-            //     setSelectedDates((prevState) => {
-            //         if (prevState.length === 1) {
-            //             return [start, end];
-            //         } else {
-            //             return [start];
-            //         }
-            //     });
-            // }
         },
         [],
     );
