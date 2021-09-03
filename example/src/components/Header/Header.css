@@ -1,13 +1,22 @@
 #header {
     padding: 0.6rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #header ul {
     padding: 0;
     margin: 0;
+    flex: 1;
 }
+
 #header ul > li {
     list-style-type: none;
     display: inline;
     margin: 0 1rem;
+}
+
+#header ul:last-child {
+    flex: none;
 }

@@ -3,14 +3,21 @@ import dayjs from 'dayjs';
 import { Box } from './Box';
 import { DateItem } from './DateItem';
 import { DateType } from './DateType';
+import { DateUtil } from './DateUtil';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import isBetween from 'dayjs/plugin/isBetween';
 import localeData from 'dayjs/plugin/localeData';
-import { DateUtil } from './DateUtil';
 
 dayjs.extend(isBetween);
 dayjs.extend(weekOfYear);
 dayjs.extend(localeData);
+
+interface ButtonContentProps {
+    previousYear?: React.ReactNode;
+    previousMonth?: React.ReactNode;
+    nextMonth?: React.ReactNode;
+    nextYear?: React.ReactNode;
+}
 
 interface CalendarProps {
     /**
@@ -83,6 +90,14 @@ interface CalendarProps {
     dateFormat?: string;
 
     /**
+     * Button contents
+     *
+     * @type {ButtonContentProps}
+     * @memberof CalendarProps
+     */
+    buttonContentProps?: ButtonContentProps;
+
+    /**
      * 선택 변경 처리기
      * - 처리기가 설정되지 않으면 사용자가 선택을 변경할 수 없습니다.
      *
@@ -106,6 +121,7 @@ export const Calendar = ({
     showDate,
     highlightToday,
     dateFormat,
+    buttonContentProps,
     onChange,
 }: CalendarProps) => {
     const DATE_FORMAT = 'YYYY-MM-DD';
@@ -223,7 +239,6 @@ export const Calendar = ({
         setDate((prevState) =>
             dayjs(prevState)
                 .add(-1, 'year')
-                // .toDate()
                 .format(dateFormat ?? DATE_FORMAT),
         );
     };
@@ -232,7 +247,6 @@ export const Calendar = ({
         setDate((prevState) =>
             dayjs(prevState)
                 .add(-1, 'month')
-                // .toDate()
                 .format(dateFormat ?? DATE_FORMAT),
         );
     };
@@ -240,7 +254,6 @@ export const Calendar = ({
         setDate((prevState) =>
             dayjs(prevState)
                 .add(1, 'month')
-                // .toDate()
                 .format(dateFormat ?? DATE_FORMAT),
         );
     };
@@ -248,7 +261,6 @@ export const Calendar = ({
         setDate((prevState) =>
             dayjs(prevState)
                 .add(1, 'year')
-                // .toDate()
                 .format(dateFormat ?? DATE_FORMAT),
         );
     };
@@ -273,10 +285,6 @@ export const Calendar = ({
         });
     };
 
-    // useEffect(() => {
-    //     console.info('selectedDates', selectedDates);
-    // }, [selectedDates]);
-
     useEffect(() => {
         updateRecords(date, selectedDates);
     }, [date, selections, selectedDates, selection, minDate, maxDate]);
@@ -296,7 +304,7 @@ export const Calendar = ({
                 start = selectedDates[0];
                 end = selectedDates[1];
             }
-            // console.info('onChange', start, end);
+
             onChange(start, end);
         }
     }, [onChange, selectedDates]);
@@ -306,41 +314,39 @@ export const Calendar = ({
             <div className="calendar-title">
                 {useMoveToYear && (
                     <button
-                        className="calendar-button"
+                        className="calendar-button previous-year"
                         onClick={handleClickPrevYear}
                         title={getButtonTitle(date, -1, 'year')}
                     >
-                        <i className="fa fa-angle-left" aria-hidden="true"></i>
-                        <i className="fa fa-angle-left" aria-hidden="true"></i>
+                        {buttonContentProps?.previousYear}
                     </button>
                 )}
                 {useMoveToMonth && (
                     <button
-                        className="calendar-button"
+                        className="calendar-button previous-month"
                         onClick={handleClickPrevMonth}
                         title={getButtonTitle(date, -1, 'month')}
                     >
-                        <i className="fa fa-angle-left" aria-hidden="true"></i>
+                        {buttonContentProps?.previousMonth}
                     </button>
                 )}
                 <div>{dayjs(date).format('YYYY년 M월')}</div>
                 {useMoveToMonth && (
                     <button
-                        className="calendar-button"
+                        className="calendar-button next-month"
                         onClick={handleClickNextMonth}
                         title={getButtonTitle(date, 1, 'month')}
                     >
-                        <i className="fa fa-angle-right" aria-hidden="true"></i>
+                        {buttonContentProps?.nextMonth}
                     </button>
                 )}
                 {useMoveToYear && (
                     <button
-                        className="calendar-button"
+                        className="calendar-button next-year"
                         onClick={handleClickNextYear}
                         title={getButtonTitle(date, 1, 'year')}
                     >
-                        <i className="fa fa-angle-right" aria-hidden="true"></i>
-                        <i className="fa fa-angle-right" aria-hidden="true"></i>
+                        {buttonContentProps?.nextYear}
                     </button>
                 )}
             </div>
