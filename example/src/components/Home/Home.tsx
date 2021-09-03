@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Calendar } from '@bbon/react-calendar';
 
@@ -12,6 +12,8 @@ export const Home = () => {
     const handleChangeSelection = useCallback(
         (start?: string, end?: string) => {
             console.info(start, end);
+
+            setSelectedDates((_) => [start ?? '', end ?? '']);
         },
         [],
     );
@@ -33,6 +35,15 @@ export const Home = () => {
                     // selections={selectedDates}
                     onChange={handleChangeSelection}
                 />
+
+                <dl>
+                    <dt>Selected:</dt>
+                    <dl>
+                        {selectedDates.filter(Boolean).length > 0
+                            ? selectedDates.filter(Boolean).join(',')
+                            : ''}
+                    </dl>
+                </dl>
             </div>
         </React.Fragment>
     );
