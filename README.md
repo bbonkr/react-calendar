@@ -48,3 +48,26 @@ const MyComponent = () => {
 
 ![example](./assets/example-001.jpeg)
 
+
+## Example
+
+1. Clone this repository.
+2. Change directory to example
+
+```bash
+$ cd example
+```
+
+3. Install dependencies
+
+```bash
+$ npm install
+```
+
+4. Start dev server
+
+```bash
+$ npm run dev
+```
+
+5. Navigate to http://localhost:3000
