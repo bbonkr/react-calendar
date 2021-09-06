@@ -20,17 +20,15 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: example/node_modules
           key: ${{runner.OS}}-build-${{hashFiles('**/package-lock.json')}}
           restore-keys: |
             ${{ runner.OS }}-build-${{ runner.OS }}-
-      - name: Change working directory
-        run: cd example
       - name: Install dependencies
-        run: npm install
+        run: cd example && npm install
 
       - name: Build
-        run: npm run build
+        run: cd example && npm run build
         env:
           NODE_ENV: production
 
