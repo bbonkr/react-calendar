@@ -46,6 +46,6 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./out
+          publish_dir: ./example/out
           tag_name: ${{ steps.prepare_tag.outputs.deploy_tag_name }}
           tag_message: 'Deployment ${{ steps.prepare_tag.outputs.tag_name }}'
