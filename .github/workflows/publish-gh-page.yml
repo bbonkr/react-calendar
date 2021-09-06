@@ -6,7 +6,7 @@ on:
       - 'v*.*.*'
 
 jobs:
-  update:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: '14'
       - name: Install dependencies
-        working-directory: example
+        working-directory: ./example
         run: npm install
 
       - name: Build
-        working-directory: example
+        working-directory: ./example
         run: npm run build
         env:
           NODE_ENV: production
