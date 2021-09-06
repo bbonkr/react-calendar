@@ -17,18 +17,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: example/node_modules
-          key: ${{runner.OS}}-build-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ runner.OS }}-
       - name: Install dependencies
-        run: cd example && npm install
+        working-directory: example
+        run: npm install
 
       - name: Build
-        run: cd example && npm run build
+        working-directory: example
+        run: npm run build
         env:
           NODE_ENV: production
 
