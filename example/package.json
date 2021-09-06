@@ -16,6 +16,7 @@
     "dependencies": {
         "@bbon/react-calendar": "^0.2.0",
         "@loadable/component": "^5.14.1",
+        "dayjs": "^1.10.6",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-helmet-async": "^1.0.9",
