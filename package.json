@@ -1,6 +1,6 @@
 {
     "name": "@bbon/react-calendar",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "description": "Calendar React Component",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
