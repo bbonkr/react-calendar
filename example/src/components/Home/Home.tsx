@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 import { Calendar } from '@bbon/react-calendar';
 
 import './Home.css';
-import '@bbon/react-calendar/dist/calendar.css';
 
 export const Home = () => {
     const [selectedDates, setSelectedDates] = useState<string[]>([]);
-    import('@bbon/react-calendar/dist/calendar.css');
+    const [min, setMin] = useState('');
+    const [max, setMax] = useState('');
 
     const handleChangeSelection = useCallback(
         (start?: string, end?: string) => {
@@ -18,21 +18,55 @@ export const Home = () => {
         [],
     );
 
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        switch (e.target.name) {
+            case 'min':
+                setMin((_) => e.target.value);
+                break;
+            case 'max':
+                setMax((_) => e.target.value);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <React.Fragment>
             <Helmet>
-                <title>Home - React Starter Kit</title>
+                <title>Home</title>
             </Helmet>
             <div id="home">
-                <h1>Hello World !!</h1>
-                <p>React Starter Kit</p>
+                <div className="flex-row">
+                    <div className="flex-column">
+                        <label htmlFor="mindate-input">Min date:</label>
+                        <input
+                            id="mindate-input"
+                            type="date"
+                            value={min}
+                            name="min"
+                            onChange={handleChangeInput}
+                        />
+                    </div>
+                    <div className="flex-column">
+                        <label htmlFor="maxdate-input">Max date:</label>
+                        <input
+                            id="maxdate-input"
+                            type="date"
+                            value={max}
+                            name="max"
+                            onChange={handleChangeInput}
+                        />
+                    </div>
+                </div>
 
                 <Calendar
                     useMoveToYear
                     useMoveToMonth
                     highlightToday
                     showDate
-                    // selections={selectedDates}
+                    minDate={min ? min : undefined}
+                    maxDate={max ? max : undefined}
                     onChange={handleChangeSelection}
                 />
 
