@@ -143,7 +143,7 @@ export const Calendar = ({
             maxDate?: DateType,
         ) => {
             setRecords((_) => {
-                const basis = dayjs(basisDate);
+                const basis = dayjs(basisDate).startOf('month');
                 const startWeek = basis.clone().startOf('month').week();
                 const newRecords: DateItem[][] = [];
                 // eslint-disable-next-line no-constant-condition
