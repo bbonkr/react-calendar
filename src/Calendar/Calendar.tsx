@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Box } from './Box';
 import { DateItem } from './DateItem';
@@ -135,95 +135,98 @@ export const Calendar = ({
     const [records, setRecords] = useState<DateItem[][]>([]);
     const today = dayjs();
 
-    const updateRecords = (basisDate: DateType, sDates: DateType[]) => {
-        setRecords((_) => {
-            const basis = dayjs(basisDate);
-            const startWeek = basis.clone().startOf('month').week();
-            const newRecords: DateItem[][] = [];
-            // eslint-disable-next-line no-constant-condition
-            for (let week = startWeek; true; week++) {
-                const items: DateItem[] = Array(7)
-                    .fill(0)
-                    .map<DateItem>((i, index) => {
-                        const current = dayjs(basisDate)
-                            .clone()
-                            .week(week)
-                            .startOf('week')
-                            .add(i + index, 'day');
+    const updateRecords = useCallback(
+        (
+            basisDate: DateType,
+            sDates: DateType[],
+            minDate?: DateType,
+            maxDate?: DateType,
+        ) => {
+            setRecords((_) => {
+                const basis = dayjs(basisDate);
+                const startWeek = basis.clone().startOf('month').week();
+                const newRecords: DateItem[][] = [];
+                // eslint-disable-next-line no-constant-condition
+                for (let week = startWeek; true; week++) {
+                    const items: DateItem[] = Array(7)
+                        .fill(0)
+                        .map<DateItem>((i, index) => {
+                            const current = dayjs(basis)
+                                .clone()
+                                .week(week)
+                                .startOf('week')
+                                .add(i + index, 'day');
 
-                        const item: DateItem = {
-                            date: current.format(dateFormat ?? DATE_FORMAT),
-                            text: current.date().toString(),
-                            isHoliday: 0 === current.day(),
-                            isPreviousMonth:
-                                current.month() !== basis.month() &&
-                                week === startWeek,
-                            isNextMonth:
-                                current.month() !== basis.month() &&
-                                week !== startWeek,
-                            isToday:
-                                current.format(dateFormat ?? DATE_FORMAT) ===
-                                dayjs().format(dateFormat ?? DATE_FORMAT),
-                            isSelected:
-                                sDates &&
-                                sDates.length > 0 &&
-                                current.isBetween(
-                                    dayjs(sDates[0]),
-                                    dayjs(
-                                        sDates.length === 1
-                                            ? sDates[0]
-                                            : sDates[1],
+                            const item: DateItem = {
+                                date: current.format(dateFormat ?? DATE_FORMAT),
+                                text: current.date().toString(),
+                                isHoliday: 0 === current.day(),
+                                isPreviousMonth:
+                                    current.month() !== basis.month() &&
+                                    week === startWeek,
+                                isNextMonth:
+                                    current.month() !== basis.month() &&
+                                    week !== startWeek,
+                                isToday:
+                                    current.format(
+                                        dateFormat ?? DATE_FORMAT,
+                                    ) ===
+                                    dayjs().format(dateFormat ?? DATE_FORMAT),
+                                isSelected:
+                                    sDates &&
+                                    sDates.length > 0 &&
+                                    current.isBetween(
+                                        dayjs(sDates[0]),
+                                        dayjs(
+                                            sDates.length === 1
+                                                ? sDates[0]
+                                                : sDates[1],
+                                        ),
+                                        'day',
+                                        '[]',
                                     ),
-                                    'day',
+                                isSelectedStart:
+                                    sDates &&
+                                    sDates.length > 0 &&
+                                    current.format(
+                                        dateFormat ?? DATE_FORMAT,
+                                    ) ===
+                                        dayjs(sDates[0]).format(
+                                            dateFormat ?? DATE_FORMAT,
+                                        ),
+                                isSelectedEnd:
+                                    sDates &&
+                                    sDates.length > 0 &&
+                                    current.format(
+                                        dateFormat ?? DATE_FORMAT,
+                                    ) ===
+                                        dayjs(
+                                            sDates.length === 1
+                                                ? sDates[0]
+                                                : sDates[1],
+                                        ).format(dateFormat ?? DATE_FORMAT),
+                                canSelect: current.isBetween(
+                                    minDate,
+                                    maxDate,
+                                    undefined,
                                     '[]',
                                 ),
-                            isSelectedStart:
-                                sDates &&
-                                sDates.length > 0 &&
-                                current.format(dateFormat ?? DATE_FORMAT) ===
-                                    dayjs(sDates[0]).format(
-                                        dateFormat ?? DATE_FORMAT,
-                                    ),
-                            isSelectedEnd:
-                                sDates &&
-                                sDates.length > 0 &&
-                                current.format(dateFormat ?? DATE_FORMAT) ===
-                                    dayjs(
-                                        sDates.length === 1
-                                            ? sDates[0]
-                                            : sDates[1],
-                                    ).format(dateFormat ?? DATE_FORMAT),
-                            canSelect:
-                                (!minDate ||
-                                    (!!minDate &&
-                                        dayjs(minDate).format(
-                                            dateFormat ?? DATE_FORMAT,
-                                        ) <=
-                                            current.format(
-                                                dateFormat ?? DATE_FORMAT,
-                                            ))) &&
-                                (!maxDate ||
-                                    (!!maxDate &&
-                                        dayjs(maxDate).format(
-                                            dateFormat ?? DATE_FORMAT,
-                                        ) >=
-                                            current.format(
-                                                dateFormat ?? DATE_FORMAT,
-                                            ))),
-                        };
+                            };
 
-                        return item;
-                    });
+                            return item;
+                        });
 
-                newRecords.push(items);
-                if (basis.month() !== dayjs(items[6].date).month()) {
-                    break;
+                    newRecords.push(items);
+                    if (basis.month() !== dayjs(items[6].date).month()) {
+                        break;
+                    }
                 }
-            }
 
-            return [...newRecords];
-        });
-    };
+                return [...newRecords];
+            });
+        },
+        [],
+    );
 
     const getButtonTitle = (
         date: DateType,
@@ -286,7 +289,7 @@ export const Calendar = ({
     };
 
     useEffect(() => {
-        updateRecords(date, selectedDates);
+        updateRecords(date, selectedDates, minDate, maxDate);
     }, [date, selections, selectedDates, selection, minDate, maxDate]);
 
     useEffect(() => {
