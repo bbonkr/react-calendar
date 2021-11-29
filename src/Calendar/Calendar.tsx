@@ -205,12 +205,15 @@ export const Calendar = ({
                                                 ? sDates[0]
                                                 : sDates[1],
                                         ).format(dateFormat ?? DATE_FORMAT),
-                                canSelect: current.isBetween(
-                                    minDate,
-                                    maxDate,
-                                    undefined,
-                                    '[]',
-                                ),
+                                canSelect:
+                                    !minDate && !maxDate
+                                        ? true
+                                        : current.isBetween(
+                                              minDate,
+                                              maxDate,
+                                              undefined,
+                                              '[]',
+                                          ),
                             };
 
                             return item;
