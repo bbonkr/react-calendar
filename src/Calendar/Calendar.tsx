@@ -209,8 +209,8 @@ export const Calendar = ({
                                     !minDate && !maxDate
                                         ? true
                                         : current.isBetween(
-                                              minDate,
-                                              maxDate,
+                                              minDate ? minDate : '0001-01-01',
+                                              maxDate ? maxDate : '9999-12-31',
                                               undefined,
                                               '[]',
                                           ),
