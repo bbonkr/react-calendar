@@ -22,13 +22,19 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - name: Prepare tag
-        id: prepare_tag
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          TAG_NAME="${GITHUB_REF##refs/tags/}"
-          echo "::set-output name=tag_name::${TAG_NAME}"
-          echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
+      # - name: Prepare tag
+      #   id: prepare_tag
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   run: |
+      #     TAG_NAME="${GITHUB_REF##refs/tags/}"
+      #     echo "::set-output name=tag_name::${TAG_NAME}"
+      #     echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
+
+      - name: get version
+        id: get_package_version
+        run: echo "::set-output name=version::$(node -p -e "require('./package.json').version")"
+      - name: set version 
+        run: echo "PACKAGE_VERSION=${{ steps.get_package_version.outputs.version }}" >> $GITHUB_ENV 
 
       - name: install dependencies (package)
         run: npm install
@@ -48,7 +54,7 @@ jobs:
       - name: Install dependencies (Example)
         working-directory: ./example
         run: |
-          echo "Filename: ${PKG_FILENAME}-${{ steps.prepare_tag.outputs.tag_name }}${PKG_EXT}"
+          echo "Filename: ${PKG_FILENAME}-${{ env.PACKAGE_VERSION }}${PKG_EXT}"
           npm install --save "../out/${PKG_FILENAME}-${{ steps.prepare_tag.outputs.tag_name }}${PKG_EXT}"
           npm install
         env:
