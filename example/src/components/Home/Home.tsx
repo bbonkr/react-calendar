@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Calendar } from '@bbon/react-calendar';
-// import { Calendar } from '../../../../dist';
 
 import './Home.css';
 
