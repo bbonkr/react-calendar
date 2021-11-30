@@ -17,15 +17,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Install dependencies
-        working-directory: ./example
-        run: npm install
-
-      - name: Build
-        working-directory: ./example
-        run: npm run build
-        env:
-          NODE_ENV: production
 
       - name: Prepare tag
         id: prepare_tag
@@ -34,6 +25,36 @@ jobs:
           TAG_NAME="${GITHUB_REF##refs/tags/}"
           echo "::set-output name=tag_name::${TAG_NAME}"
           echo "::set-output name=deploy_tag_name::deploy-${TAG_NAME}"
+
+      - name: install dependencies (package)
+        run: npm install
+      - name: lint (package)
+        run: npm run lint
+      - name: build (package)
+        env:
+          NODE_ENV: production
+        run: npm run build
+      - name: pack (package)
+        env:
+          NODE_ENV: production
+        run: npm run pack:local
+
+      - name: Install dependencies (Example)
+        working-directory: ./example
+        env:
+            PKG_FILENAME: bbon-react-calendar
+            PKG_EXT: .tgz
+        run: |
+          npm install "../out/${PKG_FILENAME}-${{ steps.prepare_tag.outputs.deploy_tag_name }}${PKG_EXT}"
+          npm install
+
+      - name: Build (Example)
+        working-directory: ./example
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
