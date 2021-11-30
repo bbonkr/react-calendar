@@ -45,6 +45,7 @@ jobs:
             PKG_FILENAME: bbon-react-calendar
             PKG_EXT: .tgz
         run: |
+          echo "Filename: ${PKG_FILENAME}-${{ steps.prepare_tag.outputs.deploy_tag_name }}${PKG_EXT}"
           npm install "../out/${PKG_FILENAME}-${{ steps.prepare_tag.outputs.deploy_tag_name }}${PKG_EXT}"
           npm install
 
