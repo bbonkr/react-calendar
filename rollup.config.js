@@ -32,7 +32,7 @@ const config = {
         resolve({ extensions }),
         babel({
             exclude: /node_modules/,
-            babelHelpers:'runtime'
+            babelHelpers: 'runtime',
         }),
         commonjs({
             include: /node_modules/,
@@ -46,10 +46,8 @@ const config = {
         }),
         peerDepsExternal(),
         copy({
-            targets:[
-                {src: 'src/**/*.css' , dest: 'dist'}
-            ]
-        })
+            targets: [{ src: 'src/**/*.css', dest: 'dist' }],
+        }),
     ],
     external,
 };

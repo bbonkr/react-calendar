@@ -1,8 +1,12 @@
-node_modules
-src/
+.git/
 .github/
+assets/
 example/
+node_modules/
+out/
+src/
 .babelrc
+.DS_Store
 .eslintignore
 .eslintrc
 .npmignore
