@@ -42,7 +42,7 @@ jobs:
       - name: pack (package)
         run: |
           pwd
-          ls -l
+          mkdir out
           npm run pack:local
 
       - name: Install dependencies (Example)
