@@ -1,5 +1,4 @@
 @import url(@bbon/react-calendar/dist/calendar.css);
-/* @import url(../../../../dist/calendar.css); */
 
 #home {
     display: flex;

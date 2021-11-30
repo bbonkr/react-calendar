@@ -23,11 +23,22 @@ export const Header = () => {
                 <ul>
                     <li>
                         <a
+                            href="https://www.npmjs.com/package/@bbon/react-calendar"
+                            target="_blank"
+                            rel="noreferrer"
+                            title="@bbon/react-calendar"
+                        >
+                            npm
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             href="https://github.com/bbonkr/react-calendar"
                             target="_blank"
                             rel="noreferrer"
+                            title="bbonkr/react-calendar"
                         >
-                            Github
+                            GitHub
                         </a>
                     </li>
                 </ul>
