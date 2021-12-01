@@ -19,7 +19,7 @@ $ npm install --save @bbon/react-calendar
 ```typescript
 
 import React, {useCallback} from 'react';
-import { Calendar } from '';
+import { Calendar } from '@bbon/react-calendar';
 
 import '@bbon/react-calendar/dist/calendar.css';
 
