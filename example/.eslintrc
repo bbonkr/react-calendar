@@ -1,12 +1,14 @@
 {
+    "root": true,
     "env": {
         "es2021": true,
         "node": true
     },
     "extends": [
-        "eslint:recommended",
-        "prettier",
-        "plugin:prettier/recommended"
+        "eslint:recommended"
+    ],
+    "plugins": [
+        "prettier"
     ],
     "settings": {
         "react": {

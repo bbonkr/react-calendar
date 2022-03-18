@@ -21,16 +21,14 @@ module.exports = {
     },
     devServer: {
         port: 3000,
-        // host: '0.0.0.0',
-        // overlay: true,
-        // stats: 'errors-only',
-        contentBase: path.resolve('out'),
         historyApiFallback: true,
         hot: true,
-        hotOnly: true,
-        inline: true,
-        publicPath: '/',
-        watchContentBase: true,
-        writeToDisk: true,
+        liveReload: false,
+        devMiddleware: {
+            writeToDisk: true,
+        },
+        static: {
+            directory: path.resolve('out'),
+        },
     },
 };
