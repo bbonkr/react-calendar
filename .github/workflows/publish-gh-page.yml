@@ -9,29 +9,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
+      - name: Checkout 
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - name: get version
-        id: get_package_version
-        run: echo "::set-output name=version::$(node -p -e "require('./package.json').version")"
-      - name: set version 
-        run: echo "PACKAGE_VERSION=${{ steps.get_package_version.outputs.version }}" >> $GITHUB_ENV 
+      - name: Get package version 
+        id: get_version 
+        uses: bbonkr/get-version-action@v1.0.3
+        with:
+          project: "./package.json"
 
       - name: install dependencies (package)
         run: npm install
+
       - name: lint (package)
         run: npm run lint
+
       - name: build (package)
         run: npm run build  
         env:
@@ -46,8 +44,8 @@ jobs:
       - name: Install dependencies (Example)
         working-directory: ./example
         run: |
-          echo "Filename: ${PKG_FILENAME}-${{ env.PACKAGE_VERSION }}${PKG_EXT}"
-          npm install --save "../out/${PKG_FILENAME}-${{ env.PACKAGE_VERSION }}${PKG_EXT}"
+          echo "Filename: ${PKG_FILENAME}-${{ steps.get_version.outputs.version }}${PKG_EXT}"
+          npm install --save "../out/${PKG_FILENAME}-${{ steps.get_version.outputs.version }}${PKG_EXT}"
           npm install
         env:
           PKG_FILENAME: bbon-react-calendar
@@ -55,7 +53,8 @@ jobs:
 
       - name: Build (Example)
         working-directory: ./example
-        run: npm run build
+        run: |
+          npm run build
         env:
           NODE_ENV: production
 
