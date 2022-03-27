@@ -14,7 +14,7 @@
     "author": "Pon Cheol Ku <dev@bbon.kr> (http://bbon.kr/)",
     "license": "MIT",
     "dependencies": {
-        "@bbon/react-calendar": "file:../out/bbon-react-calendar-0.4.1.tgz",
+        "@bbon/react-calendar": "file:../out/bbon-react-calendar-0.4.2.tgz",
         "@loadable/component": "^5.14.1",
         "dayjs": "^1.10.6",
         "react": "^17.0.2",
