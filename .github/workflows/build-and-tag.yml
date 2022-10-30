@@ -8,7 +8,7 @@ on:
       - "!*"
 
 jobs:
-  build:
+  build-and-tag:
     name: build
     runs-on: ubuntu-latest
     steps:
@@ -36,11 +36,11 @@ jobs:
 
       - name: Get package version 
         id: get_version 
-        uses: bbonkr/get-version-action@v1.0.3
+        uses: bbonkr/get-version-action@v1.0.5
         with:
           project: "./package.json"
 
-      - uses: bbonkr/git-tag-check-action@v1.0.9
+      - uses: bbonkr/git-tag-check-action@v1.0.11
         id: check_tag
         with:
           github_token: ${{ secrets.GH_TOKEN }}
@@ -55,16 +55,6 @@ jobs:
           version: ${{ steps.get_version.outputs.version }}
           git_commit_sha: ${{ github.sha }}
           git_tag_prefix: "v"
-
-      - name: Release Drafter
-        id: release_drafter
-        uses: release-drafter/release-drafter@v5
-        if: ${{ steps.check_tag.outputs.tag == '' }}
-        with:
-          config-name: release-drafter.yml
-          version: ${{ steps.get_version.outputs.version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: git tag skipped
         if: ${{ steps.check_tag.outputs.tag != '' }}

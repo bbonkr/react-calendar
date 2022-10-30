@@ -1,12 +1,11 @@
 name: publish gh-pages
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [published]
 
 jobs:
-  deploy:
+  deploy-gh-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
@@ -20,7 +19,7 @@ jobs:
 
       - name: Get package version 
         id: get_version 
-        uses: bbonkr/get-version-action@v1.0.3
+        uses: bbonkr/get-version-action@v1.0.5
         with:
           project: "./package.json"
 
