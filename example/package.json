@@ -14,7 +14,7 @@
     "author": "Pon Cheol Ku <dev@bbon.kr> (http://bbon.kr/)",
     "license": "MIT",
     "dependencies": {
-        "@bbon/react-calendar": "file:../out/bbon-react-calendar-0.4.2.tgz",
+        "@bbon/react-calendar": "file:../out/bbon-react-calendar-0.4.4.tgz",
         "@loadable/component": "^5.14.1",
         "dayjs": "^1.10.6",
         "react": "^17.0.2",
@@ -28,7 +28,7 @@
         "@babel/preset-env": "^7.13.5",
         "@babel/preset-react": "^7.12.13",
         "@babel/preset-typescript": "^7.13.0",
-        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
+        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
         "@types/loadable__component": "^5.13.3",
         "@types/react": "^17.0.2",
         "@types/react-dom": "^17.0.13",
