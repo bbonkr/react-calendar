@@ -3,6 +3,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 0;
+    border-bottom: 0.3rem solid #e0e0e0;
+    margin-bottom: 1rem;
 }
 
 #header ul {
@@ -15,6 +18,14 @@
     list-style-type: none;
     display: inline;
     margin: 0 1rem;
+}
+
+#header ul > li a {
+    text-decoration: none;
+}
+
+#header ul > li a:visited {
+    color: inherit;
 }
 
 #header ul:last-child {
