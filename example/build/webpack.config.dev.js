@@ -6,7 +6,7 @@ const baseConfig = require('./webpack.config');
 module.exports = {
     ...baseConfig,
     mode: 'development',
-    devtool: 'eval',
+    devtool: 'inline-source-map',
     resolve: {
         ...baseConfig.resolve,
     },
