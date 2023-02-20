@@ -40,7 +40,7 @@ jobs:
         with:
           project: "./package.json"
 
-      - uses: bbonkr/git-tag-check-action@v1.0.12
+      - uses: bbonkr/git-tag-check-action@v1.0.18
         id: check_tag
         with:
           github_token: ${{ secrets.GH_TOKEN }}
