@@ -2,25 +2,28 @@ name: Verify PR
 
 on:
   pull_request:
-   
+
+env:
+  NODE_VERSION: "24"
+
 jobs:
   build:
-    name: Verify build 
+    name: Verify build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - name: Setup node 
-        uses: actions/setup-node@v3
+      - name: Setup node
+        uses: actions/setup-node@v6
         with:
-          node-version: '16'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
         run: |
-          npm install 
-     
-      - name: Lint 
+          npm install
+
+      - name: Lint
         run: |
           npm run lint --if-present
 
@@ -28,36 +31,36 @@ jobs:
         run: |
           npm run test --if-present
 
-      - name: Build 
+      - name: Build
         run: |
-          npm run build 
+          npm run build
         env:
-          NODE_ENV: production 
-    
-      - name: Pack local package 
+          NODE_ENV: production
+
+      - name: Pack local package
         run: |
           npm run pack:local
         env:
-          NODE_ENV: production 
+          NODE_ENV: production
 
-      - name: Get package version 
-        id: get_version 
+      - name: Get package version
+        id: get_version
         uses: bbonkr/get-version-action@v1.0.5
         with:
           project: "./package.json"
-    
+
       - name: Install dependencies Example project
-        working-directory: ./example 
+        working-directory: ./example
         run: |
           npm install --save "../out/bbon-react-calendar-${{ steps.get_version.outputs.version }}.tgz"
-          npm install 
-     
-      - name: Build Example project 
-        working-directory: ./example 
-        run: |
-          npm run build 
+          npm install
 
-      - name: Add comment 
+      - name: Build Example project
+        working-directory: ./example
+        run: |
+          npm run build
+
+      - name: Add comment
         uses: unsplash/comment-on-pr@v1.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

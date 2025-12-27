@@ -7,19 +7,22 @@ on:
     tags:
       - "!*"
 
+env:
+  NODE_VERSION: "24"
+
 jobs:
   build-and-tag:
     name: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: '16'
-          cache: 'npm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
       - name: install dependencies
         run: |
@@ -34,8 +37,8 @@ jobs:
           NODE_ENV: production
         run: npm run build
 
-      - name: Get package version 
-        id: get_version 
+      - name: Get package version
+        id: get_version
         uses: bbonkr/get-version-action@v1.0.5
         with:
           project: "./package.json"
@@ -44,7 +47,7 @@ jobs:
         id: check_tag
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          tag: "v${{ steps.get_version.outputs.version }}"          
+          tag: "v${{ steps.get_version.outputs.version }}"
 
       - name: package-version-to-git-tag
         uses: pkgdeps/git-tag-action@v2
@@ -59,4 +62,4 @@ jobs:
       - name: git tag skipped
         if: ${{ steps.check_tag.outputs.tag != '' }}
         run: |
-          echo "Tag (v${{ steps.check_tag.outputs.tag }}) is exists already." 
+          echo "Tag (v${{ steps.check_tag.outputs.tag }}) is exists already."
