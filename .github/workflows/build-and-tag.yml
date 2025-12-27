@@ -35,7 +35,7 @@ jobs:
 
       - name: lint
         run: |
-          pnpm run lint --if-present
+          pnpm run --if-present lint
 
       - name: build
         env:
