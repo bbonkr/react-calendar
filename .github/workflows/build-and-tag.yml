@@ -18,24 +18,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: "pnpm"
 
       - name: install dependencies
         run: |
-          npm install
+          pnpm install
 
       - name: lint
         run: |
-          npm run lint --if-present
+          pnpm run --if-present lint
 
       - name: build
         env:
           NODE_ENV: production
-        run: npm run build
+        run: pnpm run build
 
       - name: Get package version
         id: get_version
