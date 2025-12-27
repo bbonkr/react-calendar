@@ -4,21 +4,24 @@ on:
   release:
     types: [published]
 
+env:
+  NODE_VERSION: "24"
+
 jobs:
   deploy-gh-pages:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: '16'
-          cache: 'npm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
-      - name: Get package version 
-        id: get_version 
+      - name: Get package version
+        id: get_version
         uses: bbonkr/get-version-action@v1.0.5
         with:
           project: "./package.json"
@@ -30,10 +33,10 @@ jobs:
         run: npm run lint
 
       - name: build (package)
-        run: npm run build  
+        run: npm run build
         env:
           NODE_ENV: production
-        
+
       - name: pack (package)
         run: |
           pwd
@@ -63,5 +66,5 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./example/out
-          tag_name: ${{ steps.prepare_tag.outputs.deploy_tag_name }}
-          tag_message: 'Deployment ${{ steps.prepare_tag.outputs.tag_name }}'
+          tag_name: "v${{ steps.get_version.outputs.version }}"
+          tag_message: "Deployment v${{ steps.get_version.outputs.version }}"
