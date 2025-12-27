@@ -14,6 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+
       - name: Setup node
         uses: actions/setup-node@v6
         with:
@@ -21,25 +26,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install
+          pnpm install
 
       - name: Lint
         run: |
-          npm run lint --if-present
+          pnpm run lint --if-present
 
       - name: Test
         run: |
-          npm run test --if-present
+          pnpm run test --if-present
 
       - name: Build
         run: |
-          npm run build
+          pnpm run build
         env:
           NODE_ENV: production
 
       - name: Pack local package
         run: |
-          npm run pack:local
+          pnpm run pack:local
         env:
           NODE_ENV: production
 
@@ -52,13 +57,13 @@ jobs:
       - name: Install dependencies Example project
         working-directory: ./example
         run: |
-          npm install --save "../out/bbon-react-calendar-${{ steps.get_version.outputs.version }}.tgz"
-          npm install
+          pnpm add "../out/bbon-react-calendar-${{ steps.get_version.outputs.version }}.tgz"
+          pnpm install
 
       - name: Build Example project
         working-directory: ./example
         run: |
-          npm run build
+          pnpm run build
 
       - name: Add comment
         uses: unsplash/comment-on-pr@v1.3.0

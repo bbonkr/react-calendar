@@ -14,11 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Get package version
         id: get_version
@@ -27,13 +32,13 @@ jobs:
           project: "./package.json"
 
       - name: install dependencies (package)
-        run: npm install
+        run: pnpm install
 
       - name: lint (package)
-        run: npm run lint
+        run: pnpm run lint
 
       - name: build (package)
-        run: npm run build
+        run: pnpm run build
         env:
           NODE_ENV: production
 
@@ -41,14 +46,14 @@ jobs:
         run: |
           pwd
           mkdir out
-          npm run pack:local
+          pnpm run pack:local
 
       - name: Install dependencies (Example)
         working-directory: ./example
         run: |
           echo "Filename: ${PKG_FILENAME}-${{ steps.get_version.outputs.version }}${PKG_EXT}"
-          npm install --save "../out/${PKG_FILENAME}-${{ steps.get_version.outputs.version }}${PKG_EXT}"
-          npm install
+          pnpm add "../out/${PKG_FILENAME}-${{ steps.get_version.outputs.version }}${PKG_EXT}"
+          pnpm install
         env:
           PKG_FILENAME: bbon-react-calendar
           PKG_EXT: .tgz
@@ -56,7 +61,7 @@ jobs:
       - name: Build (Example)
         working-directory: ./example
         run: |
-          npm run build
+          pnpm run build
         env:
           NODE_ENV: production
 
@@ -66,5 +71,5 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./example/out
-          tag_name: "v${{ steps.get_version.outputs.version }}"
-          tag_message: "Deployment v${{ steps.get_version.outputs.version }}"
+          # tag_name: "v${{ steps.get_version.outputs.version }}"
+          # tag_message: "Deployment v${{ steps.get_version.outputs.version }}"

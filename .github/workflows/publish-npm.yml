@@ -19,29 +19,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
+          cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
 
       - name: install dependencies
         run: |
-          npm install
+          pnpm install
 
       - name: lint
         run: |
-          npm run lint
+          pnpm run lint
 
       - name: build
         env:
           NODE_ENV: production
         run: |
-          npm run build
+          pnpm run build
 
       - name: publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm publish --access public
+          pnpm publish --access public
