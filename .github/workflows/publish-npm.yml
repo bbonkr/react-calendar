@@ -48,4 +48,4 @@ jobs:
 
       - name: publish
         run: |
-          pnpm publish --access public
+          pnpm publish --no-git-checks --access public
